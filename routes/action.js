@@ -68,6 +68,21 @@ router.put('/:id', validateActionId, (req, res) => {
 })
 
 
+router.post('/', validateAction, (req, res) => {
+    
+    const action = req.action;
+
+    Actionsdb.insert(action)
+    .then(added => {
+        res.status(200).json(added);
+    })
+    .catch(err => {
+        res.status(500).json({ err: 'error adding action' });
+        console.log(action);
+    })
+})
+
+
 // middleware
 
 function validateActionId (req, res, next) {
@@ -85,6 +100,18 @@ function validateActionId (req, res, next) {
     .catch(err => {
         res.status(500).json({ error: 'cannot find this action' });
     })
+}
+
+
+function validateAction(req, res, next) {
+    const actionBody = req.body;
+
+    if (!actionBody.description || !actionBody.notes) {
+        res.status(400).json({ message: 'Description and notes required.' });
+    } else {
+        req.action = actionBody;
+        next();
+    }
 }
 
 
