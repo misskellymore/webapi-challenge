@@ -86,6 +86,19 @@ router.put('/:id', validateProjectId, (req, res) => {
 
 })
 
+// get project actions
+router.get('/:id/actions', validateProjectId, (req, res) => {
+    const project = req.project;
+
+    Projects.getProjectActions(project.id)
+    .then(actions => {
+        res.status(200).json(actions);
+    })
+    .catch(err => {
+        res.status(500).json({ error: 'Project data could not be retrieved from the server' })
+    })
+})
+
 // middleware
 
 function validateProjectId(req, res, next) {
