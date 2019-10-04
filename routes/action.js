@@ -4,6 +4,10 @@ const router = express.Router();
 
 const Actionsdb = require('../data/helpers/actionModel.js');
 
+
+
+// /actions
+
 router.get('/', (req, res) => {
 
     Actionsdb.get()
@@ -16,6 +20,7 @@ router.get('/', (req, res) => {
 })
 
 
+// /actions/id
 router.get('/:id', validateActionId, (req, res) => {
     const action = req.action;
 
