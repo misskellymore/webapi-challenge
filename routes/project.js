@@ -1,6 +1,7 @@
 const express = require('express');
 
 const Projects = require('../data/helpers/projectModel.js');
+const Actionsdb = require('../data/helpers/actionModel.js');
 
 const router = express.Router();
 
@@ -99,6 +100,25 @@ router.get('/:id/actions', validateProjectId, (req, res) => {
     })
 })
 
+
+// Post /projects/2/actions
+// error on this
+
+router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
+    const project = req.project;
+    const action = req.action;
+
+    Actionsdb.insert({ ...action, project_id: project.id })
+    .then(added => {
+        res.status(201).json(added);
+    })
+    .catch(err => {
+        res.status(500).json({ err: 'error adding action' });
+        console.log(action);
+    })
+})
+
+
 // middleware
 
 function validateProjectId(req, res, next) {
@@ -129,5 +149,15 @@ function validateProject(req, res, next) {
     }
 }
 
+function validateAction(req, res, next) {
+    const actionBody = req.body;
+
+    if (!actionBody.description || !actionBody.notes) {
+        res.status(400).json({ message: 'Description and notes required.' });
+    } else {
+        req.action = actionBody;
+        next();
+    }
+}
 
 module.exports = router;

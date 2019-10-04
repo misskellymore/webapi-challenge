@@ -28,6 +28,18 @@ router.get('/:id', validateActionId, (req, res) => {
     })
 })
 
+router.delete('/:id', validateActionId, (req, res) => {
+    const action = req.action;
+
+    Actionsdb.remove(action.id)
+    .then(deleted => {
+        res.status(200).json(deleted);
+    })
+    .catch(err => {
+        res.status(500).json({ error: 'error deleting action' });
+    })
+})
+
 
 // middleware
 
