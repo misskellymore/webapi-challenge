@@ -12,3 +12,12 @@ I need this code, just don't know where, perhaps should make some middleware, do
 
 Go code!
 */
+
+
+const server = require('./server.js');
+
+const port = 5555;
+
+server.listen(port, () => {
+    console.log(`server listing on port ${port}`);
+})

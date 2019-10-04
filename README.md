@@ -26,13 +26,24 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+Express is like react for the backend. It adds extra functionality like routing and middleware support, and a simpler api
+
+
 - [ ] Describe Middleware?
+
+Middleware is like a software glue. Express’ middleware stack is basically an array of functions, functions that get the request and response objects and can operate on them and either return the response or call the next middleware in the pipeline.
 
 - [ ] Describe a Resource?
 
+A resource is something the client is trying to get back, like what is inside the json()
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+http status code + the request
+
 - [ ] How can we partition our application into sub-applications?
+
+By using express routers
 
 ## Project Setup
 
