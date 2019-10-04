@@ -28,6 +28,9 @@ router.get('/:id', validateActionId, (req, res) => {
     })
 })
 
+
+// delete
+
 router.delete('/:id', validateActionId, (req, res) => {
     const action = req.action;
 
@@ -38,6 +41,25 @@ router.delete('/:id', validateActionId, (req, res) => {
     .catch(err => {
         res.status(500).json({ error: 'error deleting action' });
     })
+})
+
+// put
+
+router.put('/:id', validateActionId, (req, res) => {
+    const action = req.action;
+    const changes = req.body;
+
+    if (!changes.description && !changes.notes) {
+        res.status(400).json({ message: 'Update notes or description' })
+    } else {
+        Actionsdb.update(action.id, changes)
+        .then(updated => {
+            res.status(200).json(updated);
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'error deleting' });
+        })
+    }
 })
 
 
